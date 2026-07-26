@@ -1,16 +1,57 @@
-# React + Vite
+# Kiln — Restaurant Ordering System
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A frontend web app for a fictional wood-fired restaurant. Built for CSCI426
+Advanced Web Programming, Phase 1.
 
-Currently, two official plugins are available:
+## Live demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://kiln-restaurant.vercel.app
 
-## React Compiler
+## Project description
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Kiln lets a visitor browse the restaurant's menu by category, add dishes to
+a cart, adjust quantities, and place a simulated order. This is the Phase 1
+submission — frontend only, built with React and Bootstrap. No backend or
+database exists yet; that comes in Phase 2.
 
-## Expanding the Oxlint configuration
+## Pages
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- **Home** — hero section + featured dishes
+- **Menu** — full menu grouped by category, with "Add to cart" buttons
+- **Cart** — the dynamic page; shows cart items, lets you adjust quantities,
+  remove items, and see the running total
+- **About** — restaurant story
+- **Contact** — contact form
+
+## Tech stack
+
+- React (Vite)
+- React Router
+- Bootstrap
+- React Context (for cart state)
+
+## Setup instructions
+
+\`\`\`bash
+npm install
+npm run dev
+\`\`\`
+
+Then open the local URL shown in your terminal (usually `http://localhost:5173`).
+
+## Screenshots
+
+### Home
+![Home page](screenshots/Home.png)
+
+### Menu
+![Menu page](screenshots/menu.png)
+
+### Cart
+![Cart page](screenshots/Cart.png)
+
+### About
+![About page](screenshots/About.png)
+
+### Contact
+![Contact page](screenshots/Contact.png)
