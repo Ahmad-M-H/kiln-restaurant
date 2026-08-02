@@ -38,11 +38,14 @@ export function CartProvider({ children }) {
       prev.map((i) => (i.menuItemId === menuItemId ? { ...i, quantity } : i))
     )
   }
+  function clearCart() {
+    setItems([])
+  }
 
   const total = items.reduce((sum, i) => sum + i.price * i.quantity, 0)
   const count = items.reduce((sum, i) => sum + i.quantity, 0)
 
-  const value = { items, addItem, removeItem, updateQuantity, total, count }
+  const value = { items, addItem, removeItem, updateQuantity, clearCart, total, count }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }

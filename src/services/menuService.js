@@ -1,13 +1,16 @@
-import { menuItems } from '../data/menuData.js'
+import axios from 'axios'
 
-// Phase 1: resolves with local data.
-// Phase 2: replace the body with
-//   return axios.get('/api/menu').then(res => res.data)
-// Because this already returns a Promise, nothing that calls
-// getMenuItems() will need to change later.
+const API_URL = 'https://kiln-backend-production.up.railway.app'
+
 export function getMenuItems() {
-  return Promise.resolve(menuItems)
+  return axios.get(`${API_URL}/api/menu`).then((res) =>
+    res.data.map((item) => ({
+      ...item,
+      price: parseFloat(item.price),
+    }))
+  )
 }
+
 export function getMenuItemsByCategory() {
   return getMenuItems().then((items) => {
     const grouped = {}

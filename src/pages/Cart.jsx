@@ -1,8 +1,35 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
+import { placeOrder } from '../services/orderService.js'
 
 export default function Cart() {
-  const { items, updateQuantity, removeItem, total } = useCart()
+  const { items, updateQuantity, removeItem, clearCart, total } = useCart()
+  const { token, isLoggedIn } = useAuth()
+  const navigate = useNavigate()
+  const [placing, setPlacing] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handlePlaceOrder() {
+    if (!isLoggedIn) {
+      navigate('/login')
+      return
+    }
+
+    setError('')
+    setPlacing(true)
+    try {
+      await placeOrder(items, token)
+      clearCart()
+      navigate('/')
+    } catch (err) {
+      console.error('Order error:', err)
+      setError('Something went wrong placing your order. Please try again.')
+    } finally {
+      setPlacing(false)
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -19,6 +46,8 @@ export default function Cart() {
   return (
     <div className="container py-5">
       <h1 className="mb-4">Your Cart</h1>
+
+      {error && <div className="alert alert-danger">{error}</div>}
 
       <table className="table align-middle">
         <thead>
@@ -66,9 +95,22 @@ export default function Cart() {
         </tbody>
       </table>
 
-      <div className="d-flex justify-content-end">
-        <h4>Total: ${total.toFixed(2)}</h4>
+      <div className="d-flex justify-content-end align-items-center gap-4">
+        <h4 className="mb-0">Total: ${total.toFixed(2)}</h4>
+        <button
+          className="btn btn-primary"
+          onClick={handlePlaceOrder}
+          disabled={placing}
+        >
+          {placing ? 'Placing order…' : 'Place order'}
+        </button>
       </div>
+
+      {!isLoggedIn && (
+        <p className="text-muted text-end mt-2">
+          You'll need to log in to complete your order.
+        </p>
+      )}
     </div>
   )
 }
